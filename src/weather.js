@@ -5,7 +5,7 @@ class weatherApi {
       "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
   }
 
-  async getWeather(location, unit = "metric") {
+  async getWeatherData(location, unit = "metric") {
     try {
       const res = await fetch(
         `${this.endpoint}${location}?key=${this.apiKey}&unitGroup=${unit}`,
@@ -46,4 +46,32 @@ class weatherApi {
   }
 }
 
-export { weatherApi };
+class weatherForm {
+  constructor() {
+    this.form = document.getElementById("weather-form");
+    this.result = document.getElementById("result");
+    this.current = document.getElementById("current");
+    this.future = document.getElementById("future");
+    this.api = new weatherApi();
+  }
+
+  render() {
+    this.getWeather();
+  }
+
+  getWeather() {
+    this.form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const formData = new FormData(this.form);
+      const location = formData.get("location");
+      const unit = formData.get("unit");
+      const encodedLocation = encodeURIComponent(location);
+      console.log(location);
+      console.log(unit);
+      const weatherData = this.api.getWeatherData(encodedLocation);
+      console.log(weatherData);
+    });
+  }
+}
+
+export { weatherApi, weatherForm };
