@@ -13,7 +13,7 @@ class Weather {
       if (!res.ok) {
         throw new Error("Network response error");
       }
-      return await res.json();
+      return this.getBasicData(res);
     } catch (e) {
       console.error(e);
     }
@@ -28,6 +28,21 @@ class Weather {
     const tempmax = data.tempmax;
     const tempmin = data.tempmin;
     return { icon, conditions, temp, datetime, description, tempmax, tempmin };
+  }
+
+  getBasicData(res) {
+    return res.json().then((data) => {
+      const address = data.address;
+      const description = data.description;
+      const icon = data.currentConditions.icon;
+      const temp = data.currentConditions.temp;
+      const conditions = data.currentConditions.conditions;
+      const days = data.days.map((day) => {
+        return this.trimData(day);
+      });
+
+      return { address, description, icon, temp, conditions, days };
+    });
   }
 }
 
