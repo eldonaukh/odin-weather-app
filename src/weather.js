@@ -1,4 +1,4 @@
-class Weather {
+class weatherApi {
   constructor() {
     this.apiKey = process.env.API_KEY;
     this.endpoint =
@@ -46,4 +46,4 @@ class Weather {
   }
 }
 
-export { Weather };
+export { weatherApi };
