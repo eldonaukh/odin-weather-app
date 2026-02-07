@@ -7,14 +7,31 @@
   </head>
   <body>
     <h1>Odin Weather App</h1>
-    <form action="">
-      <label for="location">Search location</label>
-      <input type="text" id="location" name="location" />
+    <form id="weather-form" action="">
+      <div class="location">
+        <label for="location">Search location</label>
+        <input type="text" id="location" name="location" />
+      </div>
+
+      <fieldset>
+        <legend>Select unit</legend>
+        <label for="fahrenheit">Fahrenheit</label>
+        <input
+          type="radio"
+          name="fahrenheit"
+          id="fahrenheit"
+          value="us"
+          checked
+        />
+        <label for="celsius">Celsius</label>
+        <input type="radio" name="celsius" id="celsius" value="metric" />
+      </fieldset>
+
       <button type="submit">Submit</button>
     </form>
-    <div class="result">
-        <div class="current"></div>
-        <div class="future"></div>
+    <div id="result">
+      <div id="current"></div>
+      <div id="future"></div>
     </div>
   </body>
 </html>
