@@ -15,16 +15,15 @@
 
       <fieldset>
         <legend>Select unit</legend>
-        <label for="fahrenheit">Fahrenheit</label>
-        <input
-          type="radio"
-          name="fahrenheit"
-          id="fahrenheit"
-          value="us"
-          checked
-        />
-        <label for="celsius">Celsius</label>
-        <input type="radio" name="celsius" id="celsius" value="metric" />
+        <label>
+          <input type="radio" name="unit" value="us" checked />
+          Fahrenheit
+        </label>
+
+        <label>
+          <input type="radio" name="unit" value="metric" />
+          Celsius
+        </label>
       </fieldset>
 
       <button type="submit">Submit</button>
