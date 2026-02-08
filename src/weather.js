@@ -63,6 +63,8 @@ class weatherForm {
       this.result.appendChild(loading);
       const weatherData = await this.api.getWeatherData(encodedLocation, unit);
       loading.remove();
+      this.showResult(weatherData, unit);
+      console.log(weatherData);
     });
   }
   showResult(data, unit) {
@@ -79,7 +81,7 @@ class weatherForm {
     const currData = { description, icon, temp, conditions, degree };
     this.showCurrent(currData);
   }
-  showCurrent(data) {
+  async showCurrent(data) {
     const { description, icon, temp, conditions, degree } = data;
     const currConditions = el("h3", "current-conditions", conditions);
     const currTemp = el(
@@ -88,6 +90,10 @@ class weatherForm {
       `Current temperature: ${temp} ${degree}`,
     );
     const currDesc = el("h3", "current-desc", description);
+    const currIcon = el("img", "current-icon");
+    currIcon.src = await loadImg(icon);
+    currIcon.style.width = "100px";
+    this.current.appendChild(currIcon);
     this.current.appendChild(currConditions);
     this.current.appendChild(currTemp);
     this.current.appendChild(currDesc);
@@ -107,5 +113,9 @@ function toTitleCase(str) {
     /\w\S*/g,
     (text) => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase(),
   );
+}
+async function loadImg(name) {
+  const img = await import(`./assests/icons/${name}.svg`);
+  return img.default;
 }
 export { weatherApi, weatherForm };
