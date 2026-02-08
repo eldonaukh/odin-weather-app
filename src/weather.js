@@ -79,6 +79,19 @@ class weatherForm {
     const currData = { description, icon, temp, conditions, degree };
     this.showCurrent(currData);
   }
+  showCurrent(data) {
+    const { description, icon, temp, conditions, degree } = data;
+    const currConditions = el("h3", "current-conditions", conditions);
+    const currTemp = el(
+      "h3",
+      "current-temp",
+      `Current temperature: ${temp} ${degree}`,
+    );
+    const currDesc = el("h3", "current-desc", description);
+    this.current.appendChild(currConditions);
+    this.current.appendChild(currTemp);
+    this.current.appendChild(currDesc);
+  }
 }
 function el(tag, id, string = "") {
   const node = document.createElement(tag);
