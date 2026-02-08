@@ -4,7 +4,6 @@ class weatherApi {
     this.endpoint =
       "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
   }
-
   async getWeatherData(location, unit = "metric") {
     try {
       const res = await fetch(
@@ -18,7 +17,6 @@ class weatherApi {
       console.error(e);
     }
   }
-
   trimData(data) {
     const icon = data.icon;
     const conditions = data.conditions;
@@ -29,7 +27,6 @@ class weatherApi {
     const tempmin = data.tempmin;
     return { icon, conditions, temp, datetime, description, tempmax, tempmin };
   }
-
   getBasicData(res) {
     return res.json().then((data) => {
       const address = data.address;
@@ -40,12 +37,10 @@ class weatherApi {
       const days = data.days.map((day) => {
         return this.trimData(day);
       });
-
       return { address, description, icon, temp, conditions, days };
     });
   }
 }
-
 class weatherForm {
   constructor() {
     this.form = document.getElementById("weather-form");
@@ -54,24 +49,36 @@ class weatherForm {
     this.future = document.getElementById("future");
     this.api = new weatherApi();
   }
-
   render() {
     this.getWeather();
   }
-
   getWeather() {
-    this.form.addEventListener("submit", (e) => {
+    this.form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(this.form);
       const location = formData.get("location");
       const unit = formData.get("unit");
       const encodedLocation = encodeURIComponent(location);
-      console.log(location);
-      console.log(unit);
-      const weatherData = this.api.getWeatherData(encodedLocation);
-      console.log(weatherData);
+      const loading = document.createTextNode("Loading...");
+      this.result.appendChild(loading);
+      const weatherData = await this.api.getWeatherData(encodedLocation, unit);
+      loading.remove();
     });
   }
 }
-
+function el(tag, id, string = "") {
+  const node = document.createElement(tag);
+  node.id = id;
+  if (string.length > 0) {
+    const textNode = document.createTextNode(string);
+    node.appendChild(textNode);
+  }
+  return node;
+}
+function toTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    (text) => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase(),
+  );
+}
 export { weatherApi, weatherForm };
