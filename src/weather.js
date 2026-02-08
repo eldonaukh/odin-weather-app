@@ -80,6 +80,7 @@ class weatherForm {
 
     const currData = { description, icon, temp, conditions, degree };
     this.showCurrent(currData);
+    this.showDays(days);
   }
   async showCurrent(data) {
     const { description, icon, temp, conditions, degree } = data;
@@ -99,9 +100,11 @@ class weatherForm {
     this.current.appendChild(currDesc);
   }
 }
-function el(tag, id, string = "") {
+function el(tag, id = "", string = "") {
   const node = document.createElement(tag);
-  node.id = id;
+  if (id.length > 0) {
+    node.id = id;
+  }
   if (string.length > 0) {
     const textNode = document.createTextNode(string);
     node.appendChild(textNode);
