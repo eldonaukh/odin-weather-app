@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkodin_weather_app=self.webpackChunkodin_weather_app||[]).push([[448],{448(e,a,s){e.exports=s.p+"assets/clear-day.0ae928911d7143fe5c97.svg"}}]);

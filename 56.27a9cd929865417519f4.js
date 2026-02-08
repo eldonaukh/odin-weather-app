@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkodin_weather_app=self.webpackChunkodin_weather_app||[]).push([[56],{56(e,s,a){e.exports=a.p+"assets/snow-showers-day.acb2b455bd9de4db2a8b.svg"}}]);

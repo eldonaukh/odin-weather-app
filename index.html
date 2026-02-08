@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Odin Weather App</title><style>body {
+        display: flex;
+        /* justify-content: center; */
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        flex-direction: column;
+      }
+
+      #result {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #current {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #future {
+        display: flex;
+        flex-direction: row;
+        /* gap: 10px; */
+        flex-wrap: wrap;
+        width: 1000px;
+      }
+
+      .day-div {
+        flex: 1 1 calc(15%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid black;
+        padding: 10px;
+      }</style><script defer="defer" src="main.a0739b9c9d4f8b129fa6.js"></script></head><body><h1>Odin Weather App</h1><form id="weather-form" action=""><div class="location"><label for="location">Search location</label> <input id="location" name="location"/></div><fieldset><legend>Select unit</legend><label><input type="radio" name="unit" value="us" checked="checked"/> Fahrenheit</label> <label><input type="radio" name="unit" value="metric"/> Celsius</label></fieldset><button type="submit">Submit</button></form><div id="result"><div id="current"></div><div id="future"></div></div></body></html>
