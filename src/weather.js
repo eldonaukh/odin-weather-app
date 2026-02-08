@@ -60,6 +60,7 @@ class weatherForm {
       const location = formData.get("location");
       const unit = formData.get("unit");
       const encodedLocation = encodeURIComponent(location);
+      this.clearResult();
       const loading = document.createTextNode("Loading...");
       this.result.appendChild(loading);
       const weatherData = await this.api.getWeatherData(encodedLocation, unit);
@@ -67,6 +68,14 @@ class weatherForm {
       this.showResult(weatherData, unit);
       console.log(weatherData);
     });
+  }
+  clearResult() {
+    const address = document.getElementById("address");
+    if (address) {
+      this.result.removeChild(address);
+      this.current.replaceChildren();
+      this.future.replaceChildren();
+    }
   }
   showResult(data, unit) {
     if (unit === "us") {
@@ -133,7 +142,7 @@ class weatherForm {
       dayFrag.appendChild(element);
     });
     const dayNode = el("div");
-    // dayNode.className = "day-div";
+    dayNode.className = "day-div";
     dayNode.appendChild(dayFrag);
     return dayNode;
   }
