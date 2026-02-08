@@ -65,6 +65,20 @@ class weatherForm {
       loading.remove();
     });
   }
+  showResult(data, unit) {
+    let degree;
+    if (unit === "us") {
+      degree = "°F";
+    } else {
+      degree = "°C";
+    }
+    const { address, description, icon, temp, conditions, days } = data;
+    const resAddress = el("h2", "address", toTitleCase(address));
+    this.result.insertBefore(resAddress, this.current);
+
+    const currData = { description, icon, temp, conditions, degree };
+    this.showCurrent(currData);
+  }
 }
 function el(tag, id, string = "") {
   const node = document.createElement(tag);
