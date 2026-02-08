@@ -48,6 +48,7 @@ class weatherForm {
     this.current = document.getElementById("current");
     this.future = document.getElementById("future");
     this.api = new weatherApi();
+    this.degree = "";
   }
   render() {
     this.getWeather();
@@ -68,27 +69,26 @@ class weatherForm {
     });
   }
   showResult(data, unit) {
-    let degree;
     if (unit === "us") {
-      degree = "°F";
+      this.degree = "°F";
     } else {
-      degree = "°C";
+      this.degree = "°C";
     }
     const { address, description, icon, temp, conditions, days } = data;
     const resAddress = el("h2", "address", toTitleCase(address));
     this.result.insertBefore(resAddress, this.current);
 
-    const currData = { description, icon, temp, conditions, degree };
+    const currData = { description, icon, temp, conditions };
     this.showCurrent(currData);
     this.showDays(days);
   }
   async showCurrent(data) {
-    const { description, icon, temp, conditions, degree } = data;
+    const { description, icon, temp, conditions } = data;
     const currConditions = el("h3", "current-conditions", conditions);
     const currTemp = el(
       "h3",
       "current-temp",
-      `Current temperature: ${temp} ${degree}`,
+      `Current temperature: ${temp} ${this.degree}`,
     );
     const currDesc = el("h3", "current-desc", description);
     const currIcon = el("img", "current-icon");
@@ -98,6 +98,44 @@ class weatherForm {
     this.current.appendChild(currConditions);
     this.current.appendChild(currTemp);
     this.current.appendChild(currDesc);
+  }
+  showDays(daysData) {
+    const daysFrag = document.createDocumentFragment();
+    daysData.forEach(async (day) => {
+      const dayNode = this.showDay(day);
+      daysFrag.appendChild(dayNode);
+    });
+    this.future.appendChild(daysFrag);
+  }
+  showDay(dayData) {
+    const { datetime, icon, conditions, description, temp, tempmax, tempmin } =
+      dayData;
+    const dayDatetime = el("h4", "", datetime);
+    const dayIcon = el("img");
+    loadImg(icon).then((data) => (dayIcon.src = data));
+    dayIcon.style.width = "75px";
+    const dayConditions = el("h5", "", conditions);
+    const dayDescription = el("h5", "", description);
+    const dayTemp = el("h6", "", `Avg Temp: ${temp} ${this.degree}`);
+    const dayTempMax = el("h6", "", `Highest Temp: ${tempmax} ${this.degree}`);
+    const dayTempMin = el("h6", "", `Lowest Temp: ${tempmin} ${this.degree}`);
+    const nodes = [
+      dayDatetime,
+      dayIcon,
+      dayConditions,
+      dayDescription,
+      dayTemp,
+      dayTempMax,
+      dayTempMin,
+    ];
+    const dayFrag = document.createDocumentFragment();
+    nodes.forEach((element) => {
+      dayFrag.appendChild(element);
+    });
+    const dayNode = el("div");
+    // dayNode.className = "day-div";
+    dayNode.appendChild(dayFrag);
+    return dayNode;
   }
 }
 function el(tag, id = "", string = "") {
